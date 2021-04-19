@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="pragma  123pragma solidity ^0.4.19;&#x2F;&#x2F; 声明 Solidity 编译器版本contract ZombieFactory&amp;#123;&#x2F;&#x2F; 建立一个名为 ZombieFactory 的合约&amp;#125;   uint   uint 无符号数据类型，指其值不能是负数，对于有符号的整数存在名为 int 的数据类型。Solidity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solidity 入门">
+<meta property="og:url" content="http://example.com/1970/01/01/Getting-Started-with-Solidity-md/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="pragma  123pragma solidity ^0.4.19;&#x2F;&#x2F; 声明 Solidity 编译器版本contract ZombieFactory&amp;#123;&#x2F;&#x2F; 建立一个名为 ZombieFactory 的合约&amp;#125;   uint   uint 无符号数据类型，指其值不能是负数，对于有符号的整数存在名为 int 的数据类型。Solidity">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="1969-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-19T12:46:05.576Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/1970/01/01/Getting-Started-with-Solidity-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Solidity 入门 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/Getting-Started-with-Solidity-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Solidity 入门
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：1970-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T00:00:00+08:00">1970-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-19 20:46:05" itemprop="dateModified" datetime="2021-04-19T20:46:05+08:00">2021-04-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>pragma</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.19;&#x2F;&#x2F; 声明 Solidity 编译器版本</span><br><span class="line">contract ZombieFactory&#123;&#x2F;&#x2F; 建立一个名为 ZombieFactory 的合约</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>uint</li>
+</ul>
+<blockquote>
+<p>uint 无符号数据类型，指其值不能是负数，对于有符号的整数存在名为 int 的数据类型。Solidity中，uint 实际上是 uint256代名词，一个256位的无符号整数。用法例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uint dnaDigits &#x3D; 16;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结构体、数组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 结构体</span><br><span class="line">struct Person&#123;</span><br><span class="line">	uint age;</span><br><span class="line">	string name;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 数组</span><br><span class="line">uint[2] fixedArray;&#x2F;&#x2F; 静态数组</span><br><span class="line">string[5] stringArray;&#x2F;&#x2F; string 类型的静态数组</span><br><span class="line">uint[] dynamicArray;&#x2F;&#x2F; 动态数组</span><br><span class="line">&#x2F;&#x2F; Person[] people;</span><br><span class="line">Person[] public people;&#x2F;&#x2F; 定义为 public 数组时，Solidity 会自动创建 getter 方法，其它的合约可以从这个数组读取数据（但不能写入数据），所以这在合约中是一个有用的保存公共数据的模式。</span><br><span class="line"></span><br><span class="line">people.push(Person(18,&quot;ontheway&quot;));&#x2F;&#x2F; 新创建一个 Person，并添加进 people 数组中</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>类型转换</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uint8 a &#x3D; 5;</span><br><span class="line">uint b &#x3D; 6;</span><br><span class="line">&#x2F;&#x2F; 将会抛出错误，因为 a * b 返回 uint, 而不是 uint8:</span><br><span class="line">uint8 c &#x3D; a * b;</span><br><span class="line">&#x2F;&#x2F; 我们需要将 b 转换为 uint8:</span><br><span class="line">uint8 c &#x3D; a * uint8(b);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Mapping</li>
+</ul>
+<blockquote>
+<p>key value类型</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 对于金融应用程序，将用户的余额保存在一个 uint类型的变量中：</span><br><span class="line">mapping (address &#x3D;&gt; uint) public accountBalance;</span><br><span class="line">&#x2F;&#x2F; 或者可以用来通过userId 存储&#x2F;查找的用户名</span><br><span class="line">mapping (uint &#x3D;&gt; string) userIdToName;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Address</li>
+</ul>
+<blockquote>
+<p>地址对象。</p>
+</blockquote>
+<ul>
+<li>msg.sender</li>
+</ul>
+<blockquote>
+<p>在 Solidity 中，有一些全局变量可以被所有函数调用。 其中一个就是 msg.sender，它指的是当前调用者（或智能合约）的 address。<br>在 Solidity 中，功能执行始终需要从外部调用者开始。 一个合约只会在区块链上什么也不做，除非有人调用其中的函数。所以 msg.sender总是存在的。<br>使用 msg.sender 很安全，因为它具有以太坊区块链的安全保障 —— 除非窃取与以太坊地址相关联的私钥，否则是没有办法修改其他人的数据的。</p>
+</blockquote>
+<ul>
+<li>函数</li>
+</ul>
+<p>Solidity 定义的函数的属性默认为公共。 这就意味着任何一方 (或其它合约) 都可以调用你合约里的函数。<br>显然，不是什么时候都需要这样，而且这样的合约易于受到攻击。 所以将自己的函数定义为私有是一个好的编程习惯，只有当你需要外部世界调用它时才将它设置为公共。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 习惯上函数里的变量都是以(_)开头 (但不是硬性规定) 以区别全局变量。</span><br><span class="line">function eatHamburgers(String _name,uint _amount)&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 私有函数</span><br><span class="line">&#x2F;&#x2F; 和函数的参数类似，私有函数的名字用(_)起始。</span><br><span class="line">function _addToArray(uint _number) private&#123;</span><br><span class="line">	number.push(_number);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数修饰符</li>
+</ul>
+<p>修饰符 public、external、private、internal</p>
+<p>public 公开，任何人都可以调用。<br>external 与 public 类似，只不过这些函数只能在合约之外调用 -&gt; 它们不能被合约内的其他函数调用。<br>private 私有，只有合约自己可以调用。<br>internal 和 private 类似，不过，如果某个合约继承自其父合约，这个合约即可以访问父合约中定义的“内部”函数。</p>
+<p>修饰符 view、pure</p>
+<p>view：只能读取数据不能更改数据<br>pure：比view还要严格，无法访问应用里的任何数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">string greeting &#x3D; &quot;What&#39;s up&quot;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; view</span><br><span class="line">function sayHello() public view returns (string) &#123;</span><br><span class="line">  return greeting;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; pure</span><br><span class="line">function _multiply(uint a, uint b) private pure returns (uint) &#123;</span><br><span class="line">  return a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修饰符 modifier</p>
+<blockquote>
+<p>函数修饰符看起来跟函数没什么不同，不过关键字 modifier 告诉编译器，这是个 modifier (修饰符)，而不是个 function (函数)。它不能像函数那样被直接调用，只能被添加到函数定义的末尾，用以改变函数的行为。</p>
+</blockquote>
+<p>以经典的 onlyOwner 代码为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * @dev 调用者不是‘主人’，就会抛出异常</span><br><span class="line"> *&#x2F;</span><br><span class="line">modifier onlyOwner() &#123;</span><br><span class="line">  require(msg.sender &#x3D;&#x3D; owner);</span><br><span class="line">  _;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>onlyOwner 函数修饰符使用方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">contract MyContract is Ownable &#123;</span><br><span class="line">  event LaughManiacally(string laughter);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;注意！ &#96;onlyOwner&#96;上场 :</span><br><span class="line">  function likeABoss() external onlyOwner &#123;</span><br><span class="line">    LaughManiacally(&quot;Muahahahaha&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意 likeABoss 函数上的 onlyOwner 修饰符。 当你调用 likeABoss 时，首先执行 onlyOwner 中的代码， 执行到 onlyOwner 中的 _; 语句时，程序再返回并执行 likeABoss 中的代码。<br>可见，尽管函数修饰符也可以应用到各种场合，但最常见的还是放在函数执行之前添加快速的 require检查。<br>因为给函数添加了修饰符 onlyOwner，使得唯有合约的主人（也就是部署者）才能调用它。<br>另：modifier 允许带参数。</p>
+<p>修饰符 payable</p>
+<p>用于接收 ether 的函数修饰符。样例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">contract OnlineStore &#123;</span><br><span class="line">  function buySomething() external payable &#123;</span><br><span class="line">    &#x2F;&#x2F; 检查以确定0.001以太发送出去来运行函数:</span><br><span class="line">    require(msg.value &#x3D;&#x3D; 0.001 ether);</span><br><span class="line">    &#x2F;&#x2F; 如果为真，一些用来向函数调用者发送数字内容的逻辑</span><br><span class="line">    transferThing(msg.sender);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里，msg.value 是一种可以查看向合约发送了多少以太的方法，另外 ether 是一个內建单元。</p>
+<ul>
+<li>require</li>
+</ul>
+<blockquote>
+<p>require 使得函数在执行过程中，当不满足某些条件时抛出错误，并停止执行：(会 revert 掉本次所有操作)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function sayHiToVitalik(string _name) public returns (string) &#123;</span><br><span class="line">  &#x2F;&#x2F; 比较 _name 是否等于 &quot;Vitalik&quot;. 如果不成立，抛出异常并终止程序</span><br><span class="line">  &#x2F;&#x2F; (敲黑板: Solidity 并不支持原生的字符串比较, 我们只能通过比较两字符串的 keccak256 哈希值来进行判断)</span><br><span class="line">  require(keccak256(_name) &#x3D;&#x3D; keccak256(&quot;Vitalik&quot;));</span><br><span class="line">  &#x2F;&#x2F; 如果返回 true, 运行如下语句</span><br><span class="line">  return &quot;Hi!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>事件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">event log(uint);&#x2F;&#x2F; 声明 log 事件，需要一个 uint 类型的参数</span><br><span class="line"></span><br><span class="line">emit log(1);&#x2F;&#x2F; 触发 log 事件</span><br></pre></td></tr></table></figure>
+
+<p>主要用于通知、记录日志</p>
+<ul>
+<li>继承</li>
+</ul>
+<blockquote>
+<p>合约之间可继承，使用 is 关键字</p>
+</blockquote>
+<ul>
+<li>import</li>
+</ul>
+<blockquote>
+<p>导入</p>
+</blockquote>
+<ul>
+<li>storage 与 memory 关键字</li>
+</ul>
+<blockquote>
+<p>在 Solidity 中，有两个地方可以存储变量 —— storage 或 memory。<br>Storage 变量是指永久存储在区块链中的变量。 Memory 变量则是临时的，当外部函数对某合约调用完成时，内存型变量即被移除。 你可以把它想象成存储在你电脑的硬盘或是 RAM 中数据的关系。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">contract SandwichFactory &#123;</span><br><span class="line">  struct Sandwich &#123;</span><br><span class="line">    string name;</span><br><span class="line">    string status;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Sandwich[] sandwiches;</span><br><span class="line"></span><br><span class="line">  function eatSandwich(uint _index) public &#123;</span><br><span class="line">    &#x2F;&#x2F; Sandwich mySandwich &#x3D; sandwiches[_index];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; ^ 看上去很直接，不过 Solidity 将会给出警告</span><br><span class="line">    &#x2F;&#x2F; 告诉你应该明确在这里定义 &#96;storage&#96; 或者 &#96;memory&#96;。</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 所以你应该明确定义 &#96;storage&#96;:</span><br><span class="line">    Sandwich storage mySandwich &#x3D; sandwiches[_index];</span><br><span class="line">    &#x2F;&#x2F; ...这样 &#96;mySandwich&#96; 是指向 &#96;sandwiches[_index]&#96;的指针</span><br><span class="line">    &#x2F;&#x2F; 在存储里，另外...</span><br><span class="line">    mySandwich.status &#x3D; &quot;Eaten!&quot;;</span><br><span class="line">    &#x2F;&#x2F; ...这将永久把 &#96;sandwiches[_index]&#96; 变为区块链上的存储</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 如果你只想要一个副本，可以使用&#96;memory&#96;:</span><br><span class="line">    Sandwich memory anotherSandwich &#x3D; sandwiches[_index + 1];</span><br><span class="line">    &#x2F;&#x2F; ...这样 &#96;anotherSandwich&#96; 就仅仅是一个内存里的副本了</span><br><span class="line">    &#x2F;&#x2F; 另外</span><br><span class="line">    anotherSandwich.status &#x3D; &quot;Eaten!&quot;;</span><br><span class="line">    &#x2F;&#x2F; ...将仅仅修改临时变量，对 &#96;sandwiches[_index + 1]&#96; 没有任何影响</span><br><span class="line">    &#x2F;&#x2F; 不过你可以这样做:</span><br><span class="line">    sandwiches[_index + 1] &#x3D; anotherSandwich;</span><br><span class="line">    &#x2F;&#x2F; ...如果你想把副本的改动保存回区块链存储</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>与其他合约交互</li>
+</ul>
+<blockquote>
+<p>如果我们的合约需要和区块链上的其他的合约会话，则需先定义一个 interface (接口)。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">address NumberInterfaceAddress &#x3D; 0xab38...;</span><br><span class="line">NumberInterface numberContract &#x3D; NumberInterface(NumberInterfaceAddress);</span><br><span class="line">&#x2F;&#x2F; 接下来就可以使用 numberContract 中调用 NumberInterface 中提供的公开 function 了</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>省 gas 的招数：结构封装</li>
+</ul>
+<p>通常情况下不会考虑使用 uint 的变种，因为无论如何定义 uint 的大小，Solidity 都会为它保留 256 位的存储空间。</p>
+<p>除非，把 uint 绑定到 struct 中，如果一个 struct 中包含多个 uint，则尽可能的使用较小的 uint，Solidity 会将这些 uint 打包在一起，从而节省空间，并且把同样类型的变量放一起,因为这样 Solidity 可以将存储空间最小化。例如，有两个 struct：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uint c; uint32 a; uint32 b; 和 uint32 a; uint c; uint32 b;</span><br></pre></td></tr></table></figure>
+<p>前者比后者需要的gas更少，因为前者把uint32放一起了。</p>
+<ul>
+<li>时间单位</li>
+</ul>
+<p>变量 now 将返回当前的unix时间戳，Solidity 还包含秒(seconds)，分钟(minutes)，小时(hours)，天(days)，周(weeks) 和 年(years) 等时间单位。它们都会转换成对应的秒数放入 uint 中。</p>
+<ul>
+<li>利用 view 函数节省 gas</li>
+</ul>
+<p>从外部调用一个view函数，是不需要支付一分 gas 的。<br>如果一个 view 函数在另一个函数的内部被调用，而调用函数与 view 函数的不属于同一个合约，也会产生调用成本。这是因为如果主调函数在以太坊创建了一个事务，它仍然需要逐个节点去验证。所以标记为 view 的函数只有在外部调用时才是免费的。</p>
+<ul>
+<li>提现</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">contract GetPaid is Ownable &#123;</span><br><span class="line">  function withdraw() external onlyOwner &#123;</span><br><span class="line">    owner.transfer(this.balance);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意我们使用 Ownable 合约中的 owner 和 onlyOwner，假定它已经被引入了。<br>你可以通过 transfer 函数向一个地址发送以太， 然后 this.balance 将返回当前合约存储了多少以太。 所以如果100个用户每人向我们支付1以太， this.balance 将是100以太。<br>你可以通过 transfer 向任何以太坊地址付钱。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://cryptozombies.io/zh/course">cryptozombies</a> solidity 教程</li>
+<li><a target="_blank" rel="noopener" href="https://solidity-cn.readthedocs.io/zh/develop/index.html">solidity 中文文档</a> 这个翻译版本并不会同步最新特性，仅供参考</li>
+<li><a target="_blank" rel="noopener" href="https://docs.soliditylang.org/en/latest/index.html">solidity document</a> solidity 官方文档</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/1970/01/01/Smart-Contract-Security-md/" rel="prev" title="智能合约安全">
+      <i class="fa fa-chevron-left"></i> 智能合约安全
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/1970/01/01/Getting-Started-with-Java-Deserialization-md/" rel="next" title="Java 反序列化入门">
+      Java 反序列化入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

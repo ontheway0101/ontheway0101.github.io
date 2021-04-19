@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Stack &amp; Memory &amp; Storage在 EVM 中，栈 (Stack) 用来执行操作，内存 (Memory) 与存储 (Storage) 用来存储变量。 Stack：以太坊代码在执行时会将数据 push 到栈中，通过各种操作码 (opcode) 来完成不同的指令，opcode 参数从栈顶依次向下取，如果 opcode 有返回参数则将返回参数 push 回栈顶。 Memo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solidity 进阶">
+<meta property="og:url" content="http://example.com/1970/01/01/Solidity-Advanced-md/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Stack &amp; Memory &amp; Storage在 EVM 中，栈 (Stack) 用来执行操作，内存 (Memory) 与存储 (Storage) 用来存储变量。 Stack：以太坊代码在执行时会将数据 push 到栈中，通过各种操作码 (opcode) 来完成不同的指令，opcode 参数从栈顶依次向下取，如果 opcode 有返回参数则将返回参数 push 回栈顶。 Memo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="1969-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-19T12:46:32.782Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/1970/01/01/Solidity-Advanced-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Solidity 进阶 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/Solidity-Advanced-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Solidity 进阶
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：1970-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T00:00:00+08:00">1970-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-19 20:46:32" itemprop="dateModified" datetime="2021-04-19T20:46:32+08:00">2021-04-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Stack-amp-Memory-amp-Storage"><a href="#Stack-amp-Memory-amp-Storage" class="headerlink" title="Stack &amp; Memory &amp; Storage"></a>Stack &amp; Memory &amp; Storage</h2><p>在 EVM 中，栈 (Stack) 用来执行操作，内存 (Memory) 与存储 (Storage) 用来存储变量。</p>
+<p>Stack：以太坊代码在执行时会将数据 push 到栈中，通过各种操作码 (opcode) 来完成不同的指令，opcode 参数从栈顶依次向下取，如果 opcode 有返回参数则将返回参数 push 回栈顶。</p>
+<p>Memory：用来存储临时变量的空间，一般每32字节存储一个变量，比如 mstore(p,v) 意味着 mem[p…(p + 32)) := v，即将 v 存储到 memory 的 p 至 p+32 的位置。</p>
+<p>Storage：用来永久存储变量的空间，智能合约保存的所有数据，private 的变量也可以在 Storage 中查看。</p>
+<p>数据在存储中的保存方式可以参考 <a target="_blank" rel="noopener" href="https://docs.soliditylang.org/en/latest/abi-spec.html#types">solidity document</a> /<a target="_blank" rel="noopener" href="https://solidity-cn.readthedocs.io/zh/develop/abi-spec.html#id4"> 中文版</a>。<br>我一般查看链上存储数据的方式是采用 web3.js 来读取数据。 代码如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">let</span> web3 = <span class="keyword">new</span> Web3(Web3.givenProvider || <span class="string">&quot;wss://mainnet.infura.io/ws/v3/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>);<span class="comment">// 在 infura 申请的 api</span></span></span><br><span class="line"><span class="javascript">web3.eth.getStorageAt(<span class="string">&quot;0x407d73d8a49eeb85d32cf465507dd71d507100c1&quot;</span>, <span class="number">0</span>).then(<span class="built_in">console</span>.log);<span class="comment">// 函数介绍：https://web3js.readthedocs.io/en/v1.3.0/web3-eth.html#getstorageat</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">Web3.js</span><br><span class="line">其实只需在 javascript 块中声明 web3 对象，然后在浏览器控制台使用 web3 函数就可以了。</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="create-contract-amp-call-contract"><a href="#create-contract-amp-call-contract" class="headerlink" title="create contract &amp; call contract"></a>create contract &amp; call contract</h2><p>创建合约时，交易的 inputdata 就是 contract bytecode (合约部署字节码，为了将代码部署到以太坊上)，部署的过程大概是：如果存在构造函数，则执行构造函数，然后将 runtime bytecode (合约源码运行的字节码)返回。<br>调用合约时，交易的 inputdata 作为参数输入给 runtime bytecode 进行处理。</p>
+<h2 id="msg-sender-amp-tx-origin"><a href="#msg-sender-amp-tx-origin" class="headerlink" title="msg.sender &amp; tx.origin"></a>msg.sender &amp; tx.origin</h2><p>msg.sender 指的是直接调用该合约的地址。<br>tx.origin 指的是发起这笔交易的地址。</p>
+<h2 id="call-amp-delegatecall"><a href="#call-amp-delegatecall" class="headerlink" title="call &amp; delegatecall"></a>call &amp; delegatecall</h2><p>call：正常调用<br>delegatecall：委托调用，会把被调用的智能合约代码引入到调用者合约中来执行。</p>
+<h2 id="fallback-函数"><a href="#fallback-函数" class="headerlink" title="fallback 函数"></a>fallback 函数</h2><p>在合约调用没有匹配到对应方法时，或者调用没有带任何数据时被自动调用。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/crytic/evm-opcodes">Ethereum VM (EVM) Opcodes and Instruction Reference</a> crytic 团队整理的 opcode 表格</li>
+<li><a target="_blank" rel="noopener" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.soliditylang.org/en/latest/index.html">Solidity document</a></li>
+<li><a target="_blank" rel="noopener" href="https://solidity-cn.readthedocs.io/zh/develop/index.html">Solidity 中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f98836ced529">以太坊存储类型(memory,storage)及变量存储详解</a> 讲解存储相关内容，参考文章也很好，如下</li>
+<li><a target="_blank" rel="noopener" href="https://programtheblockchain.com/posts/2018/03/09/understanding-ethereum-smart-contract-storage/">Understanding Ethereum Smart Contract Storage</a> ⬆️ 参考资料</li>
+<li><a target="_blank" rel="noopener" href="https://paper.seebug.org/640/">以太坊智能合约 OPCODE 逆向之理论基础篇</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/1970/01/01/Smart-Contract-Security-md/" rel="next" title="智能合约安全">
+      智能合约安全 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Stack-amp-Memory-amp-Storage"><span class="nav-number">1.</span> <span class="nav-text">Stack &amp; Memory &amp; Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#create-contract-amp-call-contract"><span class="nav-number">2.</span> <span class="nav-text">create contract &amp; call contract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#msg-sender-amp-tx-origin"><span class="nav-number">3.</span> <span class="nav-text">msg.sender &amp; tx.origin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call-amp-delegatecall"><span class="nav-number">4.</span> <span class="nav-text">call &amp; delegatecall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fallback-%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">fallback 函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
@@ -145,6 +145,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/DDoS-contingency-measures-for-CC-attacks-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/1970/01/01/DDoS-contingency-measures-for-CC-attacks-md/" class="post-title-link" itemprop="url">DDoS 应急之 CC 攻击</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：1970-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T00:00:00+08:00">1970-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-19 20:45:45" itemprop="dateModified" datetime="2021-04-19T20:45:45+08:00">2021-04-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="什么是-CC？"><a href="#什么是-CC？" class="headerlink" title="什么是 CC？"></a>什么是 CC？</h2><blockquote>
+<p>Challenge Collapsar(CC)攻击是指经常向目标 Web 服务器发送标准的 HTTP 请求，其中的统一资源标识符(URI) 需要进行复杂的耗时算法或数据库操作，以消耗目标Web服务器的资源。<br>2004年，一位昵称为 KiKi 的中国黑客发明了一种黑客工具，用来发送这类请求，攻击名为 “Collapsar “的NSFOCUS 防火墙，因此这种黑客工具被称为 “Challenge Collapsar”，简称 CC。因此，这种攻击方式就有了 “CC攻击 “这个名字。</p>
+</blockquote>
+<h2 id="应急思路"><a href="#应急思路" class="headerlink" title="应急思路"></a>应急思路</h2><ul>
+<li>如果是 CC 攻击导致拒绝服务，首先要定位问题，针对问题进行加固/扩容等动作。</li>
+<li>对流量进行分析，根据下面的方案进行加固。</li>
+</ul>
+<h2 id="防御维度："><a href="#防御维度：" class="headerlink" title="防御维度："></a>防御维度：</h2><p>对于 CC 攻击，主要从以下三个维度考虑：</p>
+<ol>
+<li>第三方的 ip 评分系统(恶意服务器列表)</li>
+<li>单个 ip 的访问速率</li>
+<li>增强服务可用性</li>
+</ol>
+<p>按照架构进行防御加固，可以参考下列描述：</p>
+<h3 id="CDN-层面防御"><a href="#CDN-层面防御" class="headerlink" title="CDN 层面防御"></a>CDN 层面防御</h3><p>设置相应的浏览器挑战(js challenge、captcha challenge)，并进行拦截。</p>
+<h3 id="WAF-层面防御"><a href="#WAF-层面防御" class="headerlink" title="WAF 层面防御"></a>WAF 层面防御</h3><p>联动web应用日志动态封禁攻击者的 ip</p>
+<h3 id="负载均衡层面防御"><a href="#负载均衡层面防御" class="headerlink" title="负载均衡层面防御"></a>负载均衡层面防御</h3><p>貌似只能扩容</p>
+<h3 id="应用层面防御"><a href="#应用层面防御" class="headerlink" title="应用层面防御"></a>应用层面防御</h3><p>分析服务压力承受能力(重点关注公开接口)，对短板服务进行逻辑优化/扩容<br>检查服务中的配置（数据库连接池数量、缓存容量）</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Denial-of-service_attack">Denial-of-service attack</a> — Wikipedia</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/Getting-Started-with-Java-Deserialization-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -176,7 +261,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-19 20:17:33" itemprop="dateModified" datetime="2021-04-19T20:17:33+08:00">2021-04-19</time>
+                <time title="修改时间：2021-04-19 20:45:56" itemprop="dateModified" datetime="2021-04-19T20:45:56+08:00">2021-04-19</time>
               </span>
 
           
@@ -190,7 +275,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Java-反序列化入门"><a href="#Java-反序列化入门" class="headerlink" title="Java 反序列化入门"></a>Java 反序列化入门</h1><blockquote>
+          <blockquote>
 <p>本文以 Apache Commons Collections 反序列化为例来介绍该类型漏洞的原理。</p>
 </blockquote>
 <h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><h3 id="1、漏洞复现环境"><a href="#1、漏洞复现环境" class="headerlink" title="1、漏洞复现环境"></a>1、漏洞复现环境</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- jdk 8 / Apache Commons Collections 组件版本如下 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/commons-collections/commons-collections --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-collections<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-collections<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -235,6 +320,382 @@
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a target="_blank" rel="noopener" href="http://p0desta.com/2019/03/30/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8Bjava%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%B3%BB%E5%88%97(%E4%B8%80)/">Apache Commons Collections反序列化漏洞分析</a> 主要学习文章</li>
 <li><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1264803678201760">反射-调用方法 </a>基础原理</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/Getting-Started-with-Solidity-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/1970/01/01/Getting-Started-with-Solidity-md/" class="post-title-link" itemprop="url">Solidity 入门</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：1970-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T00:00:00+08:00">1970-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-19 20:46:05" itemprop="dateModified" datetime="2021-04-19T20:46:05+08:00">2021-04-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>pragma</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.19;&#x2F;&#x2F; 声明 Solidity 编译器版本</span><br><span class="line">contract ZombieFactory&#123;&#x2F;&#x2F; 建立一个名为 ZombieFactory 的合约</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>uint</li>
+</ul>
+<blockquote>
+<p>uint 无符号数据类型，指其值不能是负数，对于有符号的整数存在名为 int 的数据类型。Solidity中，uint 实际上是 uint256代名词，一个256位的无符号整数。用法例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uint dnaDigits &#x3D; 16;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结构体、数组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 结构体</span><br><span class="line">struct Person&#123;</span><br><span class="line">	uint age;</span><br><span class="line">	string name;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 数组</span><br><span class="line">uint[2] fixedArray;&#x2F;&#x2F; 静态数组</span><br><span class="line">string[5] stringArray;&#x2F;&#x2F; string 类型的静态数组</span><br><span class="line">uint[] dynamicArray;&#x2F;&#x2F; 动态数组</span><br><span class="line">&#x2F;&#x2F; Person[] people;</span><br><span class="line">Person[] public people;&#x2F;&#x2F; 定义为 public 数组时，Solidity 会自动创建 getter 方法，其它的合约可以从这个数组读取数据（但不能写入数据），所以这在合约中是一个有用的保存公共数据的模式。</span><br><span class="line"></span><br><span class="line">people.push(Person(18,&quot;ontheway&quot;));&#x2F;&#x2F; 新创建一个 Person，并添加进 people 数组中</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>类型转换</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uint8 a &#x3D; 5;</span><br><span class="line">uint b &#x3D; 6;</span><br><span class="line">&#x2F;&#x2F; 将会抛出错误，因为 a * b 返回 uint, 而不是 uint8:</span><br><span class="line">uint8 c &#x3D; a * b;</span><br><span class="line">&#x2F;&#x2F; 我们需要将 b 转换为 uint8:</span><br><span class="line">uint8 c &#x3D; a * uint8(b);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Mapping</li>
+</ul>
+<blockquote>
+<p>key value类型</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 对于金融应用程序，将用户的余额保存在一个 uint类型的变量中：</span><br><span class="line">mapping (address &#x3D;&gt; uint) public accountBalance;</span><br><span class="line">&#x2F;&#x2F; 或者可以用来通过userId 存储&#x2F;查找的用户名</span><br><span class="line">mapping (uint &#x3D;&gt; string) userIdToName;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Address</li>
+</ul>
+<blockquote>
+<p>地址对象。</p>
+</blockquote>
+<ul>
+<li>msg.sender</li>
+</ul>
+<blockquote>
+<p>在 Solidity 中，有一些全局变量可以被所有函数调用。 其中一个就是 msg.sender，它指的是当前调用者（或智能合约）的 address。<br>在 Solidity 中，功能执行始终需要从外部调用者开始。 一个合约只会在区块链上什么也不做，除非有人调用其中的函数。所以 msg.sender总是存在的。<br>使用 msg.sender 很安全，因为它具有以太坊区块链的安全保障 —— 除非窃取与以太坊地址相关联的私钥，否则是没有办法修改其他人的数据的。</p>
+</blockquote>
+<ul>
+<li>函数</li>
+</ul>
+<p>Solidity 定义的函数的属性默认为公共。 这就意味着任何一方 (或其它合约) 都可以调用你合约里的函数。<br>显然，不是什么时候都需要这样，而且这样的合约易于受到攻击。 所以将自己的函数定义为私有是一个好的编程习惯，只有当你需要外部世界调用它时才将它设置为公共。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 习惯上函数里的变量都是以(_)开头 (但不是硬性规定) 以区别全局变量。</span><br><span class="line">function eatHamburgers(String _name,uint _amount)&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 私有函数</span><br><span class="line">&#x2F;&#x2F; 和函数的参数类似，私有函数的名字用(_)起始。</span><br><span class="line">function _addToArray(uint _number) private&#123;</span><br><span class="line">	number.push(_number);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数修饰符</li>
+</ul>
+<p>修饰符 public、external、private、internal</p>
+<p>public 公开，任何人都可以调用。<br>external 与 public 类似，只不过这些函数只能在合约之外调用 -&gt; 它们不能被合约内的其他函数调用。<br>private 私有，只有合约自己可以调用。<br>internal 和 private 类似，不过，如果某个合约继承自其父合约，这个合约即可以访问父合约中定义的“内部”函数。</p>
+<p>修饰符 view、pure</p>
+<p>view：只能读取数据不能更改数据<br>pure：比view还要严格，无法访问应用里的任何数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">string greeting &#x3D; &quot;What&#39;s up&quot;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; view</span><br><span class="line">function sayHello() public view returns (string) &#123;</span><br><span class="line">  return greeting;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; pure</span><br><span class="line">function _multiply(uint a, uint b) private pure returns (uint) &#123;</span><br><span class="line">  return a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修饰符 modifier</p>
+<blockquote>
+<p>函数修饰符看起来跟函数没什么不同，不过关键字 modifier 告诉编译器，这是个 modifier (修饰符)，而不是个 function (函数)。它不能像函数那样被直接调用，只能被添加到函数定义的末尾，用以改变函数的行为。</p>
+</blockquote>
+<p>以经典的 onlyOwner 代码为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * @dev 调用者不是‘主人’，就会抛出异常</span><br><span class="line"> *&#x2F;</span><br><span class="line">modifier onlyOwner() &#123;</span><br><span class="line">  require(msg.sender &#x3D;&#x3D; owner);</span><br><span class="line">  _;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>onlyOwner 函数修饰符使用方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">contract MyContract is Ownable &#123;</span><br><span class="line">  event LaughManiacally(string laughter);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;注意！ &#96;onlyOwner&#96;上场 :</span><br><span class="line">  function likeABoss() external onlyOwner &#123;</span><br><span class="line">    LaughManiacally(&quot;Muahahahaha&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意 likeABoss 函数上的 onlyOwner 修饰符。 当你调用 likeABoss 时，首先执行 onlyOwner 中的代码， 执行到 onlyOwner 中的 _; 语句时，程序再返回并执行 likeABoss 中的代码。<br>可见，尽管函数修饰符也可以应用到各种场合，但最常见的还是放在函数执行之前添加快速的 require检查。<br>因为给函数添加了修饰符 onlyOwner，使得唯有合约的主人（也就是部署者）才能调用它。<br>另：modifier 允许带参数。</p>
+<p>修饰符 payable</p>
+<p>用于接收 ether 的函数修饰符。样例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">contract OnlineStore &#123;</span><br><span class="line">  function buySomething() external payable &#123;</span><br><span class="line">    &#x2F;&#x2F; 检查以确定0.001以太发送出去来运行函数:</span><br><span class="line">    require(msg.value &#x3D;&#x3D; 0.001 ether);</span><br><span class="line">    &#x2F;&#x2F; 如果为真，一些用来向函数调用者发送数字内容的逻辑</span><br><span class="line">    transferThing(msg.sender);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里，msg.value 是一种可以查看向合约发送了多少以太的方法，另外 ether 是一个內建单元。</p>
+<ul>
+<li>require</li>
+</ul>
+<blockquote>
+<p>require 使得函数在执行过程中，当不满足某些条件时抛出错误，并停止执行：(会 revert 掉本次所有操作)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function sayHiToVitalik(string _name) public returns (string) &#123;</span><br><span class="line">  &#x2F;&#x2F; 比较 _name 是否等于 &quot;Vitalik&quot;. 如果不成立，抛出异常并终止程序</span><br><span class="line">  &#x2F;&#x2F; (敲黑板: Solidity 并不支持原生的字符串比较, 我们只能通过比较两字符串的 keccak256 哈希值来进行判断)</span><br><span class="line">  require(keccak256(_name) &#x3D;&#x3D; keccak256(&quot;Vitalik&quot;));</span><br><span class="line">  &#x2F;&#x2F; 如果返回 true, 运行如下语句</span><br><span class="line">  return &quot;Hi!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>事件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">event log(uint);&#x2F;&#x2F; 声明 log 事件，需要一个 uint 类型的参数</span><br><span class="line"></span><br><span class="line">emit log(1);&#x2F;&#x2F; 触发 log 事件</span><br></pre></td></tr></table></figure>
+
+<p>主要用于通知、记录日志</p>
+<ul>
+<li>继承</li>
+</ul>
+<blockquote>
+<p>合约之间可继承，使用 is 关键字</p>
+</blockquote>
+<ul>
+<li>import</li>
+</ul>
+<blockquote>
+<p>导入</p>
+</blockquote>
+<ul>
+<li>storage 与 memory 关键字</li>
+</ul>
+<blockquote>
+<p>在 Solidity 中，有两个地方可以存储变量 —— storage 或 memory。<br>Storage 变量是指永久存储在区块链中的变量。 Memory 变量则是临时的，当外部函数对某合约调用完成时，内存型变量即被移除。 你可以把它想象成存储在你电脑的硬盘或是 RAM 中数据的关系。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">contract SandwichFactory &#123;</span><br><span class="line">  struct Sandwich &#123;</span><br><span class="line">    string name;</span><br><span class="line">    string status;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Sandwich[] sandwiches;</span><br><span class="line"></span><br><span class="line">  function eatSandwich(uint _index) public &#123;</span><br><span class="line">    &#x2F;&#x2F; Sandwich mySandwich &#x3D; sandwiches[_index];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; ^ 看上去很直接，不过 Solidity 将会给出警告</span><br><span class="line">    &#x2F;&#x2F; 告诉你应该明确在这里定义 &#96;storage&#96; 或者 &#96;memory&#96;。</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 所以你应该明确定义 &#96;storage&#96;:</span><br><span class="line">    Sandwich storage mySandwich &#x3D; sandwiches[_index];</span><br><span class="line">    &#x2F;&#x2F; ...这样 &#96;mySandwich&#96; 是指向 &#96;sandwiches[_index]&#96;的指针</span><br><span class="line">    &#x2F;&#x2F; 在存储里，另外...</span><br><span class="line">    mySandwich.status &#x3D; &quot;Eaten!&quot;;</span><br><span class="line">    &#x2F;&#x2F; ...这将永久把 &#96;sandwiches[_index]&#96; 变为区块链上的存储</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 如果你只想要一个副本，可以使用&#96;memory&#96;:</span><br><span class="line">    Sandwich memory anotherSandwich &#x3D; sandwiches[_index + 1];</span><br><span class="line">    &#x2F;&#x2F; ...这样 &#96;anotherSandwich&#96; 就仅仅是一个内存里的副本了</span><br><span class="line">    &#x2F;&#x2F; 另外</span><br><span class="line">    anotherSandwich.status &#x3D; &quot;Eaten!&quot;;</span><br><span class="line">    &#x2F;&#x2F; ...将仅仅修改临时变量，对 &#96;sandwiches[_index + 1]&#96; 没有任何影响</span><br><span class="line">    &#x2F;&#x2F; 不过你可以这样做:</span><br><span class="line">    sandwiches[_index + 1] &#x3D; anotherSandwich;</span><br><span class="line">    &#x2F;&#x2F; ...如果你想把副本的改动保存回区块链存储</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>与其他合约交互</li>
+</ul>
+<blockquote>
+<p>如果我们的合约需要和区块链上的其他的合约会话，则需先定义一个 interface (接口)。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">address NumberInterfaceAddress &#x3D; 0xab38...;</span><br><span class="line">NumberInterface numberContract &#x3D; NumberInterface(NumberInterfaceAddress);</span><br><span class="line">&#x2F;&#x2F; 接下来就可以使用 numberContract 中调用 NumberInterface 中提供的公开 function 了</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>省 gas 的招数：结构封装</li>
+</ul>
+<p>通常情况下不会考虑使用 uint 的变种，因为无论如何定义 uint 的大小，Solidity 都会为它保留 256 位的存储空间。</p>
+<p>除非，把 uint 绑定到 struct 中，如果一个 struct 中包含多个 uint，则尽可能的使用较小的 uint，Solidity 会将这些 uint 打包在一起，从而节省空间，并且把同样类型的变量放一起,因为这样 Solidity 可以将存储空间最小化。例如，有两个 struct：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uint c; uint32 a; uint32 b; 和 uint32 a; uint c; uint32 b;</span><br></pre></td></tr></table></figure>
+<p>前者比后者需要的gas更少，因为前者把uint32放一起了。</p>
+<ul>
+<li>时间单位</li>
+</ul>
+<p>变量 now 将返回当前的unix时间戳，Solidity 还包含秒(seconds)，分钟(minutes)，小时(hours)，天(days)，周(weeks) 和 年(years) 等时间单位。它们都会转换成对应的秒数放入 uint 中。</p>
+<ul>
+<li>利用 view 函数节省 gas</li>
+</ul>
+<p>从外部调用一个view函数，是不需要支付一分 gas 的。<br>如果一个 view 函数在另一个函数的内部被调用，而调用函数与 view 函数的不属于同一个合约，也会产生调用成本。这是因为如果主调函数在以太坊创建了一个事务，它仍然需要逐个节点去验证。所以标记为 view 的函数只有在外部调用时才是免费的。</p>
+<ul>
+<li>提现</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">contract GetPaid is Ownable &#123;</span><br><span class="line">  function withdraw() external onlyOwner &#123;</span><br><span class="line">    owner.transfer(this.balance);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意我们使用 Ownable 合约中的 owner 和 onlyOwner，假定它已经被引入了。<br>你可以通过 transfer 函数向一个地址发送以太， 然后 this.balance 将返回当前合约存储了多少以太。 所以如果100个用户每人向我们支付1以太， this.balance 将是100以太。<br>你可以通过 transfer 向任何以太坊地址付钱。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://cryptozombies.io/zh/course">cryptozombies</a> solidity 教程</li>
+<li><a target="_blank" rel="noopener" href="https://solidity-cn.readthedocs.io/zh/develop/index.html">solidity 中文文档</a> 这个翻译版本并不会同步最新特性，仅供参考</li>
+<li><a target="_blank" rel="noopener" href="https://docs.soliditylang.org/en/latest/index.html">solidity document</a> solidity 官方文档</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/Smart-Contract-Security-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/1970/01/01/Smart-Contract-Security-md/" class="post-title-link" itemprop="url">智能合约安全</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：1970-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T00:00:00+08:00">1970-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-19 20:46:24" itemprop="dateModified" datetime="2021-04-19T20:46:24+08:00">2021-04-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="常见安全问题"><a href="#常见安全问题" class="headerlink" title="常见安全问题"></a>常见安全问题</h2><h3 id="1、重入（Reentrancy）"><a href="#1、重入（Reentrancy）" class="headerlink" title="1、重入（Reentrancy）"></a>1、重入（Reentrancy）</h3><p>成因：智能合约信任被调用者，被调用者在执行被调用方法时进行递归调用，破坏智能合约业务逻辑。</p>
+<p>防御建议：智能合约在调用外部智能合约时，优先变更自身参数，并在调用结束后验证。</p>
+<h3 id="2、访问控制（Access-Control）"><a href="#2、访问控制（Access-Control）" class="headerlink" title="2、访问控制（Access Control）"></a>2、访问控制（Access Control）</h3><p>成因：参数、函数的访问控制出现问题，比如将一些关键参数设置为 public，可能在调用时被外部合约恶意变更，或是未对敏感函数设置访问控制，导致智能合约拥有者被改变。使用被废弃的 tx.origin 参数来校验调用者，在代理合约中随意使用 detegatecall 等都可能导致访问控制失效。</p>
+<p>防御建议：正确的配置访问控制。</p>
+<h3 id="3、算数问题（Arithmetic-Issues）"><a href="#3、算数问题（Arithmetic-Issues）" class="headerlink" title="3、算数问题（Arithmetic Issues）"></a>3、算数问题（Arithmetic Issues）</h3><p>成因：使用 Solidity 默认运算符时可能导致算数溢出。</p>
+<p>防御建议：采用 openzeppelin 的 SafeMath 库。</p>
+<h3 id="4、未检查低级调用返回值（Unchecked-Return-Values-For-Low-Level-Calls）"><a href="#4、未检查低级调用返回值（Unchecked-Return-Values-For-Low-Level-Calls）" class="headerlink" title="4、未检查低级调用返回值（Unchecked Return Values For Low Level Calls）"></a>4、未检查低级调用返回值（Unchecked Return Values For Low Level Calls）</h3><p>成因：未处理一些低级函数（call、callcode、delegatecall、send）的返回值。它们在执行出现错误的时候并不会 revert 之前的操作，只会返回一个运行失败的布尔值 false，合约代码会继续执行。如果不检查这种低级调用的返回值，可能会导致安全问题。</p>
+<p>防御建议：使用低级调用的方式调用外部合约时一定要处理返回值</p>
+<h3 id="5、拒绝服务（Denial-of-Service）"><a href="#5、拒绝服务（Denial-of-Service）" class="headerlink" title="5、拒绝服务（Denial of Service）"></a>5、拒绝服务（Denial of Service）</h3><p>成因：根据不同的智能合约可能存在不同的 DoS 方法，可能修改某些业务参数，调用合约时每次 require 检查都会被 revert ，从而导致整个合约停止服务。或者想办法让调用一次的 gas 超过以太坊规范导致 DoS 等。</p>
+<p>防御建议：根据场景修复漏洞。</p>
+<h3 id="6、不安全的随机算法（Bad-Randomness）"><a href="#6、不安全的随机算法（Bad-Randomness）" class="headerlink" title="6、不安全的随机算法（Bad Randomness）"></a>6、不安全的随机算法（Bad Randomness）</h3><p>成因：在区块链上没有绝对的随机算法，链上的一切随机数都会在一定程度上受到影响。</p>
+<p>防御建议：不要依赖链上的随机算法。</p>
+<h3 id="7、超前交易（Front-Running）"><a href="#7、超前交易（Front-Running）" class="headerlink" title="7、超前交易（Front-Running）"></a>7、超前交易（Front-Running）</h3><p>成因：交易上链前所有矿工都可以在交易池中看到这笔交易的信息，如果这笔交易有利可图，攻击者可以给出更高的小费，自己发布一笔同样的交易，这笔交易就会优先被矿工打包上链，从而抢先赚取这笔交易的利润，使原交易失败。</p>
+<p>防御建议：根据场景防御。比如把合约设计为无法在一笔交易中获得利润，针对一个答题合约，要求用户先将答案用共钥加密再提交，然后再发起一笔交易提交私钥用来解密上一笔交易的答案。</p>
+<h3 id="8、控制时间（Time-manipulation）"><a href="#8、控制时间（Time-manipulation）" class="headerlink" title="8、控制时间（Time manipulation）"></a>8、控制时间（Time manipulation）</h3><p>成因：block.timestamp 不可信，可以被矿工在一定程度上影响。</p>
+<p>防御建议：不要依赖 block.timestamp 进行关键操作。</p>
+<h3 id="9、短地址攻击（Short-Address-Attack）"><a href="#9、短地址攻击（Short-Address-Attack）" class="headerlink" title="9、短地址攻击（Short Address Attack）"></a>9、短地址攻击（Short Address Attack）</h3><p>成因：客户端未对输入数据进行检查，EVM 默认地址为 20 位，会补齐 12 个 0，当传入的是短地址时，12 个 0 不足以补齐 32 位，则会从第一个参数的高位取数进行补齐，导致参数变化。</p>
+<p>防御建议：检查地址长度。</p>
+<h3 id="10、闪电贷攻击（Flash-Loan-Attack）"><a href="#10、闪电贷攻击（Flash-Loan-Attack）" class="headerlink" title="10、闪电贷攻击（Flash Loan Attack）"></a>10、闪电贷攻击（Flash Loan Attack）</h3><h4 id="什么是闪电贷？"><a href="#什么是闪电贷？" class="headerlink" title="什么是闪电贷？"></a>什么是闪电贷？</h4><p>闪电贷是通过智能合约实现的一种贷款方式。智能合约允许用户在一笔交易中借出大量资金，只要在这笔交易结束前把钱和利息还回来即可。</p>
+<p>成因：利用闪电贷功能对能被大量资金操纵价格的合约进行套利攻击。</p>
+<p>防御：设计合约时要考虑大量资金操作的情况，因为闪电贷可以轻松让任何人瞬间拥有大量资金。</p>
+<p>案例：<a target="_blank" rel="noopener" href="https://www.chainnews.com/articles/277290599974.htm">全面揭露 bZx 闪电贷事件</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.dasp.co/">DASP Top10</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts">OpenZeppelin-contracts</a> OpenZeppelin 提供的标准库</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/Solidity-Advanced-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/1970/01/01/Solidity-Advanced-md/" class="post-title-link" itemprop="url">Solidity 进阶</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：1970-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T00:00:00+08:00">1970-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-19 20:46:32" itemprop="dateModified" datetime="2021-04-19T20:46:32+08:00">2021-04-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Stack-amp-Memory-amp-Storage"><a href="#Stack-amp-Memory-amp-Storage" class="headerlink" title="Stack &amp; Memory &amp; Storage"></a>Stack &amp; Memory &amp; Storage</h2><p>在 EVM 中，栈 (Stack) 用来执行操作，内存 (Memory) 与存储 (Storage) 用来存储变量。</p>
+<p>Stack：以太坊代码在执行时会将数据 push 到栈中，通过各种操作码 (opcode) 来完成不同的指令，opcode 参数从栈顶依次向下取，如果 opcode 有返回参数则将返回参数 push 回栈顶。</p>
+<p>Memory：用来存储临时变量的空间，一般每32字节存储一个变量，比如 mstore(p,v) 意味着 mem[p…(p + 32)) := v，即将 v 存储到 memory 的 p 至 p+32 的位置。</p>
+<p>Storage：用来永久存储变量的空间，智能合约保存的所有数据，private 的变量也可以在 Storage 中查看。</p>
+<p>数据在存储中的保存方式可以参考 <a target="_blank" rel="noopener" href="https://docs.soliditylang.org/en/latest/abi-spec.html#types">solidity document</a> /<a target="_blank" rel="noopener" href="https://solidity-cn.readthedocs.io/zh/develop/abi-spec.html#id4"> 中文版</a>。<br>我一般查看链上存储数据的方式是采用 web3.js 来读取数据。 代码如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">let</span> web3 = <span class="keyword">new</span> Web3(Web3.givenProvider || <span class="string">&quot;wss://mainnet.infura.io/ws/v3/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>);<span class="comment">// 在 infura 申请的 api</span></span></span><br><span class="line"><span class="javascript">web3.eth.getStorageAt(<span class="string">&quot;0x407d73d8a49eeb85d32cf465507dd71d507100c1&quot;</span>, <span class="number">0</span>).then(<span class="built_in">console</span>.log);<span class="comment">// 函数介绍：https://web3js.readthedocs.io/en/v1.3.0/web3-eth.html#getstorageat</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">Web3.js</span><br><span class="line">其实只需在 javascript 块中声明 web3 对象，然后在浏览器控制台使用 web3 函数就可以了。</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="create-contract-amp-call-contract"><a href="#create-contract-amp-call-contract" class="headerlink" title="create contract &amp; call contract"></a>create contract &amp; call contract</h2><p>创建合约时，交易的 inputdata 就是 contract bytecode (合约部署字节码，为了将代码部署到以太坊上)，部署的过程大概是：如果存在构造函数，则执行构造函数，然后将 runtime bytecode (合约源码运行的字节码)返回。<br>调用合约时，交易的 inputdata 作为参数输入给 runtime bytecode 进行处理。</p>
+<h2 id="msg-sender-amp-tx-origin"><a href="#msg-sender-amp-tx-origin" class="headerlink" title="msg.sender &amp; tx.origin"></a>msg.sender &amp; tx.origin</h2><p>msg.sender 指的是直接调用该合约的地址。<br>tx.origin 指的是发起这笔交易的地址。</p>
+<h2 id="call-amp-delegatecall"><a href="#call-amp-delegatecall" class="headerlink" title="call &amp; delegatecall"></a>call &amp; delegatecall</h2><p>call：正常调用<br>delegatecall：委托调用，会把被调用的智能合约代码引入到调用者合约中来执行。</p>
+<h2 id="fallback-函数"><a href="#fallback-函数" class="headerlink" title="fallback 函数"></a>fallback 函数</h2><p>在合约调用没有匹配到对应方法时，或者调用没有带任何数据时被自动调用。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/crytic/evm-opcodes">Ethereum VM (EVM) Opcodes and Instruction Reference</a> crytic 团队整理的 opcode 表格</li>
+<li><a target="_blank" rel="noopener" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.soliditylang.org/en/latest/index.html">Solidity document</a></li>
+<li><a target="_blank" rel="noopener" href="https://solidity-cn.readthedocs.io/zh/develop/index.html">Solidity 中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f98836ced529">以太坊存储类型(memory,storage)及变量存储详解</a> 讲解存储相关内容，参考文章也很好，如下</li>
+<li><a target="_blank" rel="noopener" href="https://programtheblockchain.com/posts/2018/03/09/understanding-ethereum-smart-contract-storage/">Understanding Ethereum Smart Contract Storage</a> ⬆️ 参考资料</li>
+<li><a target="_blank" rel="noopener" href="https://paper.seebug.org/640/">以太坊智能合约 OPCODE 逆向之理论基础篇</a></li>
 </ul>
 
       
@@ -317,7 +778,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -351,7 +812,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">John Doe</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -377,7 +838,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
